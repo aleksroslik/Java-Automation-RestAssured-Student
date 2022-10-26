@@ -20,6 +20,7 @@ public class StudentApiTest extends BaseTest {
             """;
 
     Student studentObject = new StudentFactory().getStudent();
+    Student randomStudent = new StudentFactory().getRandomStudent();
 
     @Test
     public void shouldCreateNewStudentFromMap() {
@@ -42,16 +43,11 @@ public class StudentApiTest extends BaseTest {
     }
 
     @Test
-    public void shouldCreateNewStudentFromSomething() {
-        Map<String, Object> studentMap = new HashMap<>();
-        studentMap.put("name", "Name");
-        studentMap.put("surname", "Surname");
-        studentMap.put("nationality", "Poland");
-        studentMap.put("age", 28);
+    public void shouldCreateNewStudentFromObject() {
         String total = RestAssured.
                 given()
                 .spec(getRequestSpec())
-                .body(studentMap)
+                .body(studentObject)
                 .when()
                 .post()
                 .then()
@@ -62,11 +58,11 @@ public class StudentApiTest extends BaseTest {
     }
 
     @Test
-    public void shouldCreateNewStudentFromObject() {
+    public void shouldCreateNewRandomStudentBuilder() {
         String total = RestAssured.
                 given()
                 .spec(getRequestSpec())
-                .body(studentObject)
+                .body(randomStudent)
                 .when()
                 .post()
                 .then()
