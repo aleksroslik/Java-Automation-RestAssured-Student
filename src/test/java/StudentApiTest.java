@@ -42,6 +42,26 @@ public class StudentApiTest extends BaseTest {
     }
 
     @Test
+    public void shouldCreateNewStudentFromSomething() {
+        Map<String, Object> studentMap = new HashMap<>();
+        studentMap.put("name", "Name");
+        studentMap.put("surname", "Surname");
+        studentMap.put("nationality", "Poland");
+        studentMap.put("age", 28);
+        String total = RestAssured.
+                given()
+                .spec(getRequestSpec())
+                .body(studentMap)
+                .when()
+                .post()
+                .then()
+                .statusCode(201)
+                .extract()
+                .path("total");
+        assertThat(total).as("wrong total number").isEqualTo("10");
+    }
+
+    @Test
     public void shouldCreateNewStudentFromObject() {
         String total = RestAssured.
                 given()
